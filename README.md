@@ -2,6 +2,5 @@
 repo that code goes into for CI demo
 
 
-test10
-
+Code will soon go here with this README.md -- a simple java project that uses maven to build... coming soon.
 

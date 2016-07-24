@@ -2,4 +2,4 @@
 repo that code goes into for CI demo
 
 
-Code will soon go here with this README.md -- a simple java project that uses maven to build... 
+Code will soon go here with this README.md -- a simple java project that uses maven to build. 

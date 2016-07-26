@@ -18,7 +18,7 @@ public class TestEnglishNumberToWords {
 		assertEquals("one hundred fifty seven thousand four hundred twenty two", EnglishNumberToWords.convert(157422));
 	}
 	@Test
-	public void testLargeNumber() {
+	public void testLargeNumber2() {
 		assertEquals("one hundred fifty seven million four hundred twenty two", EnglishNumberToWords.convert(157,000,422));
 	}
 

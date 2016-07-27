@@ -7,5 +7,5 @@ So that I don't get fired and make our customers mad
 
 Scenario: User sees hello world
 Given the user has opened a browser
-When the user gots to our URL
+When the user goes to our URL
 Then he will see "Hello World"

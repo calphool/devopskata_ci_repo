@@ -14,6 +14,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		
 		out.println("Hello World!");
+                out.println("<h1>Working!</h1>");
 		out.close();
 	}
 }

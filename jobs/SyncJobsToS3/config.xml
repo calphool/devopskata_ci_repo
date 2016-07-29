@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Syncs Jenkins config.xml to S3 backup</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>master</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H/5 * * * *</spec>
+    </hudson.triggers.TimerTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>set +x
+set +x
+echo &apos;-------------------------------------------&apos;
+echo &quot; Syncing Jenkins job configurations to s3  &quot;
+echo &apos;-------------------------------------------&apos;
+echo &apos; &apos;
+echo &apos;Host:&apos;
+hostname
+echo &apos; &apos;
+echo &apos;-------------------------------------------&apos;
+echo &apos;Running as user:&apos;
+whoami
+echo &apos; &apos;
+echo &apos;-------------------------------------------&apos;
+echo &apos;Working directory:&apos;
+pwd
+echo &apos; &apos;
+sudo rsync -avm --include=&quot;config.xml&quot; --include=&quot;nextBuildNumber&quot; -f &apos;hide,! */&apos; /var/lib/jenkins/jobs /home/ec2-user/s3</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

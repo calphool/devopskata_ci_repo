@@ -10,6 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.rounceville.EnglishNumberToWords;
 
 public class SimpleWebAppServlet extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
                 int i = 14562;
 		PrintWriter out = resp.getWriter();
@@ -30,13 +35,14 @@ public class SimpleWebAppServlet extends HttpServlet {
 	}
 
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                String thenumber = request.getParameter("thenumber");
-		PrintWriter out = resp.getWriter();
+                String thenumber = req.getParameter("thenumber");
+		 
+                PrintWriter out = resp.getWriter();
 		
                 resp.setContentType("text/html");
 
                 out.println("You sent the value: " + thenumber + "<br/>");
-                out.println("Which means: " + EnglishNumberToWords.convert(Integer.parse(thenumber)));
+                out.println("Which means: " + EnglishNumberToWords.convert(Integer.parseInt(thenumber)));
 
                 out.println("<br/><br/><a href='.'>Back</a>");
         }

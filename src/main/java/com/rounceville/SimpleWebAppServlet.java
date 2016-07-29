@@ -26,7 +26,7 @@ public class SimpleWebAppServlet extends HttpServlet {
                 out.println("<hr/>");
                 out.println(i + " = " + EnglishNumberToWords.convert(i));
                 out.println("<hr/>");
-                out.println("<form action='.' method='post'>\n");
+                out.println("<form action='./simplewebapp' method='post'>\n");
                 out.println("Type a number:\n");
                 out.println("<input type=text name='thenumber'>\n");
                 out.println("<input type=submit name=submit value=submit>\n");
@@ -44,6 +44,6 @@ public class SimpleWebAppServlet extends HttpServlet {
                 out.println("You sent the value: " + thenumber + "<br/>");
                 out.println("Which means: " + EnglishNumberToWords.convert(Integer.parseInt(thenumber)));
 
-                out.println("<br/><br/><a href='.'>Back</a>");
+                out.println("<br/><br/><a href='./simplewebapp'>Back</a>");
         }
 }

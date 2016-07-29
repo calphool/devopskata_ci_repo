@@ -1,6 +1,6 @@
 # feature/smoketest.feature
 
-Feature: Smoketest
+Feature: Poem
 As a product owner
 I want to show our users a poem
 So that I can demo how entertaining I am

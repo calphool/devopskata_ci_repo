@@ -1,6 +1,9 @@
 package com.rounceville;
 import java.text.DecimalFormat;
 
+import java.security.InvalidParameterException;
+
+
 public class EnglishNumberToWords {
 
   private static final String[] tensNames = {
@@ -63,6 +66,10 @@ public class EnglishNumberToWords {
   public static String convert(long number) {
     // 0 to 999 999 999 999
     if (number == 0) { return "zero"; }
+
+    if (number < 0) {
+        throw new InvalidParameterException("Only positive numbers accepted."); 
+    }
 
     String snumber = Long.toString(number);
 

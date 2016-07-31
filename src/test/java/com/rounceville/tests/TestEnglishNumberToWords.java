@@ -8,6 +8,9 @@ import com.rounceville.EnglishNumberToWords;
 
 public class TestEnglishNumberToWords {
 
+  	@Rule
+  	public final ExpectedException exception = ExpectedException.none();
+
 	@Test
 	public void testZero() {
 		assertEquals("zero", EnglishNumberToWords.convert(0));
@@ -26,4 +29,10 @@ public class TestEnglishNumberToWords {
 		assertEquals("twelve", EnglishNumberToWords.convert(12));
 	}
 
+        @Test
+        public void testNegative() {
+ 		exception.expect(InvalidParameterException.class);
+
+                assertNotEquals("negative one", EnglishNumberToWords.convert(-1));        
+        }
 }

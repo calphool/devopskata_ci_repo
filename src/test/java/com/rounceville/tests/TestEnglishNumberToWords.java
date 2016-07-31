@@ -2,11 +2,10 @@ package com.rounceville.tests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import com.rounceville.EnglishNumberToWords;
 import java.security.InvalidParameterException;
-
+import org.junit.*;
 
 public class TestEnglishNumberToWords {
 

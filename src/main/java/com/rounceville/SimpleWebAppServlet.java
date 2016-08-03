@@ -121,7 +121,7 @@ public class SimpleWebAppServlet extends HttpServlet {
                 	out.println("Exception: " + e.getMessage());
                 }
                 */
-                out.println("realpath: " + req.getServletContext().getRealPath("."));
+                out.println("realpath: " + req.getServletContext().getRealPath("/"));
                 out.println("<hr/>");
                 out.println(i + " = " + EnglishNumberToWords.convert(i));
                 out.println("<hr/>");

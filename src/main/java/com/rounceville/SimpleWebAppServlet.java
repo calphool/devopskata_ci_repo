@@ -107,6 +107,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 		out.println("Hello World!");
                 out.println("<hr/>");
                 out.println("Poems:</br>");
+                /*
                 try {
                 	ArrayList<String> alPoemList = getPoems();
                 	for(String sPoem : alPoemList) {
@@ -117,7 +118,8 @@ public class SimpleWebAppServlet extends HttpServlet {
                 	out.println("Unable to get poems from database.");
                 	out.println("Exception: " + e.getMessage());
                 }
-                
+                */
+                out.println("realpath: " + req.getServletContext().getRealPath("."));
                 out.println("<hr/>");
                 out.println(i + " = " + EnglishNumberToWords.convert(i));
                 out.println("<hr/>");

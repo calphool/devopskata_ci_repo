@@ -54,9 +54,9 @@ public class SimpleWebAppServlet extends HttpServlet {
 		passwordFile = getServletContext().getRealPath("/") + passwordFile;
 		
 		try {
-			endpoint = new String(Files.readAllBytes(Paths.get(endpointFile)));
-			user = new String(Files.readAllBytes(Paths.get(userFile)));
-			password = new String(Files.readAllBytes(Paths.get(passwordFile)));
+			endpoint = new String(Files.readAllBytes(Paths.get(endpointFile))).trim();
+			user = new String(Files.readAllBytes(Paths.get(userFile))).trim();
+			password = new String(Files.readAllBytes(Paths.get(passwordFile))).trim();
 			setupDB(endpoint, user,	password);
 		} 
 		catch (SQLException e) {

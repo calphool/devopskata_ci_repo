@@ -96,7 +96,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 			String sql = "select poemtext from poem";
 			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()){
-				alReturnResult.add(rs.getString(0));
+				alReturnResult.add(rs.getString("poemtext"));
 			}
 			rs.close();
 			stmt.close();

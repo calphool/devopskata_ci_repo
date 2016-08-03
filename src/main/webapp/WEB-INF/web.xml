@@ -7,15 +7,15 @@
 
     <context-param>
         <param-name>endpointfile</param-name>
-        <param-value>/home/ec2-user/dbendpoint.txt</param-value>
+        <param-value>dbendpoint.txt</param-value>
     </context-param>
     <context-param>
         <param-name>userfile</param-name>
-        <param-value>/home/ec2-user/dbuser.txt</param-value>
+        <param-value>dbuser.txt</param-value>
     </context-param>
     <context-param>
         <param-name>passwordfile</param-name>
-        <param-value>/home/ec2-user/dbpassword.txt</param-value>
+        <param-value>dbpassword.txt</param-value>
     </context-param>
 
 

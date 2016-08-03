@@ -80,7 +80,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 		stmt.close();
 
 		stmt = connection.createStatement();
-		stmt.executeUpdate("delete from poem;");
+		//stmt.executeUpdate("delete from poem;");
 		stmt.executeUpdate("insert into poem (id, poemtext) values(   UNHEX(REPLACE(UUID(),'-','')), 'Now is the time for all good men to come to the aid of their country.');");
 		stmt.close();
 		

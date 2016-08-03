@@ -5,6 +5,20 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     version="2.4">
 
+    <context-param>
+        <param-name>endpointfile</param-name>
+        <param-value>/home/ec2-user/dbendpoint.txt</param-value>
+    </context-param>
+    <context-param>
+        <param-name>userfile</param-name>
+        <param-value>/home/ec2-user/dbuser.txt</param-value>
+    </context-param>
+    <context-param>
+        <param-name>passwordfile</param-name>
+        <param-value>/home/ec2-user/dbpassword.txt</param-value>
+    </context-param>
+
+
     <display-name>SimpleWebApp</display-name>
     <servlet>
     	<servlet-name>SimpleWebApp</servlet-name>

@@ -2,6 +2,14 @@ package com.rounceville;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,15 +22,102 @@ public class SimpleWebAppServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static String endpointFile ; 
+	private static String userFile;
+	private static String passwordFile;
+	
+	private static String endpoint;
+	private static String user;
+	private static String password;
+	
+	public void init() throws ServletException {
+		endpointFile = getServletContext().getInitParameter("endpointfile");
+		if(endpointFile == null)
+			throw new ServletException("servlet context init parameter: endpointfile not found.");
+		
+		userFile = getServletContext().getInitParameter("userfile");
+		if(userFile == null)
+			throw new ServletException("servlet context init parameter: userFile not found.");
 
+		passwordFile =  getServletContext().getInitParameter("passwordfile");
+		if(passwordFile == null)
+			throw new ServletException("servlet context init parameter: passwordFile not found.");
+
+		try {
+			endpoint = new String(Files.readAllBytes(Paths.get(endpointFile)));
+			user = new String(Files.readAllBytes(Paths.get(userFile)));
+			password = new String(Files.readAllBytes(Paths.get(passwordFile)));
+			setupDB(endpoint, user,	password);
+		} 
+		catch (SQLException e) {
+			throw new ServletException(e);
+		} 
+		catch (IOException e) {
+			throw new ServletException(e);
+		}
+	}
+	
+	private void setupDB(String dbEndpoint, String user, String passwd) throws SQLException {
+		Connection  connection = DriverManager.getConnection("jdbc:mysql://" + dbEndpoint, user, passwd);
+		Statement stmt = connection.createStatement();
+		stmt.executeUpdate("CREATE database if not exists poems;");
+		stmt.close();
+		connection.close();
+		
+		connection = DriverManager.getConnection("jdbc:mysql://" + dbEndpoint + "/poems", user, passwd);
+		stmt = connection.createStatement();
+		stmt.executeUpdate("CREATE table if not exists poem (id binary(16) not null, poemtext varchar(1000), primary key (id));");
+		stmt.close();
+
+		stmt = connection.createStatement();
+		stmt.executeUpdate("delete from poem; insert into poem (id, poemtext) values(UNHEX(REPLACE(UUID(),'-','')), 'Now is the time for all good men to come to the aid of their country.');");
+		stmt.close();
+		
+		connection.close();
+	}
+
+	private ArrayList<String> getPoems() throws ServletException {
+		ArrayList<String> alReturnResult = new ArrayList<String>();
+		Connection connection;
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://" + endpoint + "/poems", user, password);
+			Statement stmt = connection.createStatement();
+			String sql = "select poemtext from poem";
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				alReturnResult.add(rs.getString(0));
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+		} catch (SQLException e) {
+			throw new ServletException(e);
+		}	
+		
+		return alReturnResult;
+	}
+	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-                int i = 14562;
-		PrintWriter out = resp.getWriter();
+        int i = 14562;
+        
+        PrintWriter out = resp.getWriter();
 		resp.setContentType("text/html");
 		
 		out.println("Hello World!");
                 out.println("<hr/>");
-                out.println("Now is the time for all good men to come to the aid of their country.");
+                out.println("Poems:</br>");
+                try {
+                	ArrayList<String> alPoemList = getPoems();
+                	for(String sPoem : alPoemList) {
+                		out.println(sPoem + "</br/>\n");
+                	}
+                }
+                catch(Exception e) {
+                	out.println("Unable to get poems from database.");
+                	out.println("Exception: " + e.getMessage());
+                }
+                
                 out.println("<hr/>");
                 out.println(i + " = " + EnglishNumberToWords.convert(i));
                 out.println("<hr/>");

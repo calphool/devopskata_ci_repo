@@ -32,6 +32,11 @@ public class SimpleWebAppServlet extends HttpServlet {
 	private static String password;
 	
 	public void init() throws ServletException {
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+		} catch (ClassNotFoundException e1) {
+			throw new ServletException(e1);
+		}
 		
 		endpointFile = getServletContext().getInitParameter("endpointfile");
 		if(endpointFile == null)

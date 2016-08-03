@@ -32,6 +32,8 @@ public class SimpleWebAppServlet extends HttpServlet {
 	private static String password;
 	
 	public void init() throws ServletException {
+		if(1==1) return;
+		
 		endpointFile = getServletContext().getInitParameter("endpointfile");
 		if(endpointFile == null)
 			throw new ServletException("servlet context init parameter: endpointfile not found.");

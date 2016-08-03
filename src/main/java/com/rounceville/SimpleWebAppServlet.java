@@ -32,20 +32,22 @@ public class SimpleWebAppServlet extends HttpServlet {
 	private static String password;
 	
 	public void init() throws ServletException {
-		if(1==1) return;
 		
 		endpointFile = getServletContext().getInitParameter("endpointfile");
 		if(endpointFile == null)
 			throw new ServletException("servlet context init parameter: endpointfile not found.");
+		endpointFile = getServletContext().getRealPath("/") + endpointFile;
 		
 		userFile = getServletContext().getInitParameter("userfile");
 		if(userFile == null)
 			throw new ServletException("servlet context init parameter: userFile not found.");
+		userFile = getServletContext().getRealPath("/") + userFile;
 
 		passwordFile =  getServletContext().getInitParameter("passwordfile");
 		if(passwordFile == null)
 			throw new ServletException("servlet context init parameter: passwordFile not found.");
-
+		passwordFile = getServletContext().getRealPath("/") + passwordFile;
+		
 		try {
 			endpoint = new String(Files.readAllBytes(Paths.get(endpointFile)));
 			user = new String(Files.readAllBytes(Paths.get(userFile)));
@@ -61,13 +63,13 @@ public class SimpleWebAppServlet extends HttpServlet {
 	}
 	
 	private void setupDB(String dbEndpoint, String user, String passwd) throws SQLException {
-		Connection  connection = DriverManager.getConnection("jdbc:mysql://" + dbEndpoint, user, passwd);
+		Connection  connection = DriverManager.getConnection("jdbc:mariadb://" + dbEndpoint, user, passwd);
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate("CREATE database if not exists poems;");
 		stmt.close();
 		connection.close();
 		
-		connection = DriverManager.getConnection("jdbc:mysql://" + dbEndpoint + "/poems", user, passwd);
+		connection = DriverManager.getConnection("jdbc:mariadb://" + dbEndpoint + "/poems", user, passwd);
 		stmt = connection.createStatement();
 		stmt.executeUpdate("CREATE table if not exists poem (id binary(16) not null, poemtext varchar(1000), primary key (id));");
 		stmt.close();
@@ -83,7 +85,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 		ArrayList<String> alReturnResult = new ArrayList<String>();
 		Connection connection;
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://" + endpoint + "/poems", user, password);
+			connection = DriverManager.getConnection("jdbc:mariadb://" + endpoint + "/poems", user, password);
 			Statement stmt = connection.createStatement();
 			String sql = "select poemtext from poem";
 			ResultSet rs = stmt.executeQuery(sql);
@@ -109,7 +111,7 @@ public class SimpleWebAppServlet extends HttpServlet {
 		out.println("Hello World!");
                 out.println("<hr/>");
                 out.println("Poems:</br>");
-                /*
+                
                 try {
                 	ArrayList<String> alPoemList = getPoems();
                 	for(String sPoem : alPoemList) {
@@ -120,8 +122,7 @@ public class SimpleWebAppServlet extends HttpServlet {
                 	out.println("Unable to get poems from database.");
                 	out.println("Exception: " + e.getMessage());
                 }
-                */
-                out.println("realpath: " + req.getServletContext().getRealPath("/"));
+                
                 out.println("<hr/>");
                 out.println(i + " = " + EnglishNumberToWords.convert(i));
                 out.println("<hr/>");
